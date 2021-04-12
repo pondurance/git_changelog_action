@@ -12,7 +12,9 @@ runs:
   using: "composite"
   steps:
     - run: curl -L --output changelog.tar.gz ${{ inputs.url }}
+      shell: bash
     - run: tar -xf changelog.tar.gz
+      shell: bash
     - name: Run changelog generation
       run: |
         CONTENT=$(./git-changelog `git describe --abbrev=0 --tags`..HEAD)
@@ -20,4 +22,5 @@ runs:
         CONTENT="${CONTENT//$'\n'/'%0A'}"
         CONTENT="${CONTENT//$'\r'/'%0D'}"
         echo "::set-output name=content::$CONTENT"
+      shell: bash
       id: changelog
