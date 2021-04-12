@@ -1,0 +1,23 @@
+name: 'Changelog Generation'
+description: 'Generate a changelog based on git commits'
+inputs:
+  url:
+    description: 'Download path for the changelog binary'
+    default: 'https://github.com/aldrin/git-changelog/releases/download/v0.3.1/git-changelog-v0.3.1-linux.tar.gz'
+outputs:
+  changelog:
+    descriptions: "Changelog Text"
+    value: ${{ steps.changelog.outputs.content
+runs:
+  using: "composite"
+  steps:
+    - run: curl -L --output changelog.tar.gz ${{ inputs.url }}
+    - run: tar -xf changelog.tar.gz
+    - name: Run changelog generation
+      run: |
+        CONTENT=$(./git-changelog `git describe --abbrev=0 --tags`..HEAD)
+        CONTENT="${CONTENT//'%'/'%25'}"
+        CONTENT="${CONTENT//$'\n'/'%0A'}"
+        CONTENT="${CONTENT//$'\r'/'%0D'}"
+        echo "::set-output name=content::$CONTENT"
+      id: changelog
