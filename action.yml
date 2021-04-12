@@ -7,7 +7,7 @@ inputs:
 outputs:
   changelog:
     description: "Changelog Text"
-    value: ${{ steps.changelog.outputs.content }}
+    value: ${{ steps.generation.outputs.content }}
 runs:
   using: "composite"
   steps:
@@ -18,9 +18,10 @@ runs:
     - name: Run changelog generation
       run: |
         CONTENT=$(./git-changelog `git describe --abbrev=0 --tags`..HEAD)
+        echo "$CONTENT"
         CONTENT="${CONTENT//'%'/'%25'}"
         CONTENT="${CONTENT//$'\n'/'%0A'}"
         CONTENT="${CONTENT//$'\r'/'%0D'}"
         echo "::set-output name=content::$CONTENT"
       shell: bash
-      id: changelog
+      id: generation
