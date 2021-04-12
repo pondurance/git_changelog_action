@@ -6,7 +6,7 @@ inputs:
     default: 'https://github.com/aldrin/git-changelog/releases/download/v0.3.1/git-changelog-v0.3.1-linux.tar.gz'
 outputs:
   changelog:
-    descriptions: "Changelog Text"
+    description: "Changelog Text"
     value: ${{ steps.changelog.outputs.content
 runs:
   using: "composite"
