@@ -6,7 +6,7 @@ GitHub Action to help generate a changelog for a project based on [aldrin/git-ch
 
 ```yaml
 - name: Changelog
-  uses: pondurance/git_changelog_action@v2
+  uses: pondurance/git_changelog_action@v1
   id: changelog
 ```
 
