@@ -1,3 +1,5 @@
+---
+
 name: 'Changelog Generation'
 description: 'Generate a changelog based on git commits'
 inputs:
